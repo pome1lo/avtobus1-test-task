@@ -1,6 +1,6 @@
 ﻿namespace WebApplication.Models
 {
-    public class ShortLink
+    public class ShortLink : BaseModel
     {
         public int Id { get; set; }
         public string OriginalUrl { get; set; } = string.Empty;
