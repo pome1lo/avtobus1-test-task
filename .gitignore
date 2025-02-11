@@ -11,9 +11,7 @@ obj/
 *.tlog
 *.cache
 *.csproj.user
-
-# Entity Framework Migrations
-Migrations/
+ 
 
 # Visual Studio specific
 .vs/

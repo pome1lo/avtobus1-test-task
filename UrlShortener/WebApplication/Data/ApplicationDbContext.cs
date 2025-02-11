@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using WebApplication.Data.Seeds;
 using WebApplication.Models;
 
 namespace WebApplication.Data
@@ -14,6 +15,8 @@ namespace WebApplication.Data
             modelBuilder.Entity<ShortLink>()
                 .HasIndex(l => l.ShortUrl)
                 .IsUnique();
+
+            ShortLinkSeedData.Seed(modelBuilder);
         }
     }
 }
