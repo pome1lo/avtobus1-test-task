@@ -1,0 +1,42 @@
+bin/
+obj/
+.vscode/
+.idea/
+*.user
+*.suo
+*.vs/
+*.dbmdl
+*.pdb
+*.log
+*.tlog
+*.cache
+*.csproj.user
+
+# Entity Framework Migrations
+Migrations/
+
+# Visual Studio specific
+.vs/
+*.vscode/
+
+# Rider specific
+.idea/
+*.sln.iml
+
+# ASP.NET temporary files
+App_Data/
+AppPackages/
+Backup/
+logs/
+
+# Environment files
+.env
+secrets.json
+
+# MySQL database files
+*.sql
+*.sqlite
+
+# Publish output
+publish/
+out/
