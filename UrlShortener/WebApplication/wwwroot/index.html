@@ -6,6 +6,9 @@
     <title>Сокращение ссылок</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script>
+
+        let currentEditId = null;
+
         async function createShortLink() {
             const originalUrl = document.getElementById('originalUrl').value;
             const response = await fetch('/api/shortlinks', {
@@ -47,11 +50,41 @@
                         <td>${new Date(link.createdAt).toLocaleString()}</td>
                         <td>${link.clickCount}</td>
                         <td>
+                            <button class="btn btn-warning" onclick="openEditModal(${link.id}, '${link.originalUrl}')">Изменить</button>
                             <button class="btn btn-danger" onclick="deleteShortLink(${link.id})">Удалить</button>
                         </td>
                     </tr>
                 `;
             });
+        }
+
+        async function updateShortLink() {
+            const updatedUrl = document.getElementById('editUrl').value;
+            const errorContainer = document.getElementById('editError');
+            errorContainer.innerHTML = '';
+
+            const response = await fetch(`api/shortlinks/${currentEditId}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(updatedUrl)
+            });
+
+            const result = await response.json();
+            if (response.ok) {
+                bootstrap.Modal.getInstance(document.getElementById('editModal')).hide();
+                fetchAllShortLinks();
+            } else {
+                errorContainer.innerHTML = `<div class="alert alert-danger"><strong>Ошибка:</strong> ${result.Message}</div>`;
+            }
+        }
+
+
+        function openEditModal(id, originalUrl) {
+            const errorContainer = document.getElementById('editError');
+            errorContainer.innerHTML = '';
+            currentEditId = id;
+            document.getElementById('editUrl').value = originalUrl;
+            new bootstrap.Modal(document.getElementById('editModal')).show();
         }
 
         async function deleteShortLink(id) {
@@ -105,6 +138,24 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="editModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Редактировать ссылку</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input id="editUrl" type="url" class="form-control" />
+                    <div id="editError" class="mt-2"></div> 
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                    <button class="btn btn-primary" onclick="updateShortLink()">Сохранить</button>
+                </div>
+            </div>
+        </div>
+    </div> 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
