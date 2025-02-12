@@ -1,4 +1,5 @@
-﻿using WebApplication.Data.Interfaces;
+﻿using FluentValidation;
+using WebApplication.Data.Interfaces;
 using WebApplication.Exceptions;
 using WebApplication.Models;
 using WebApplication.Services.Interfaces;
@@ -9,19 +10,16 @@ namespace WebApplication.Services
     public class ShortLinkService : IShortLinkService
     {
         private readonly IShortLinkRepository _repository;
+        private readonly IValidator<ShortLink> _validator;
 
-        public ShortLinkService(IShortLinkRepository repository)
+        public ShortLinkService(IShortLinkRepository repository, IValidator<ShortLink> validator)
         {
             _repository = repository;
+            _validator = validator;
         }
 
         public async Task<ShortLink> CreateShortLinkAsync(string originalUrl)
         {
-            if (string.IsNullOrEmpty(originalUrl) || !Uri.IsWellFormedUriString(originalUrl, UriKind.Absolute))
-            {
-                throw new InvalidUrlException("Некорректный URL.");
-            }
-
             var shortUrl = ShortUrlGenerator.GenerateShortUrl();
             var shortLink = new ShortLink
             {
@@ -30,6 +28,12 @@ namespace WebApplication.Services
                 CreatedAt = DateTime.UtcNow,
                 ClickCount = 0
             };
+
+            var validationResult = await _validator.ValidateAsync(shortLink);
+            if (!validationResult.IsValid)
+            {
+                throw new InvalidUrlException(string.Join("; ", validationResult.Errors.Select(e => e.ErrorMessage)));
+            }
 
             return await _repository.CreateAsync(shortLink);
         }

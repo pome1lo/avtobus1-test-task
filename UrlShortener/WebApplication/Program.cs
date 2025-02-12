@@ -1,10 +1,13 @@
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using WebApplication.Data;
 using WebApplication.Data.Interfaces;
 using WebApplication.Data.Repositories;
 using WebApplication.GlobalExceptionHandler;
+using WebApplication.Models;
 using WebApplication.Services;
 using WebApplication.Services.Interfaces;
+using WebApplication.Services.Validators;
 
 var builder = Microsoft.AspNetCore.Builder.WebApplication.CreateBuilder(args);
 
@@ -14,6 +17,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddScoped<IShortLinkRepository, ShortLinkRepository>();
 builder.Services.AddScoped<IShortLinkService, ShortLinkService>();
+builder.Services.AddScoped<IValidator<ShortLink>, ShortLinkValidator>();
 
 builder.Services.AddControllers();
 
