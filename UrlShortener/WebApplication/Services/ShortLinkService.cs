@@ -75,5 +75,25 @@ namespace WebApplication.Services
 
             await _repository.DeleteAsync(id);
         }
+
+        public async Task<ShortLink> UpdateShortLinkAsync(int id, string newOriginalUrl)
+        {
+            var shortLink = await _repository.GetByIdAsync(id);
+            if (shortLink == null)
+            {
+                throw new ShortLinkNotFoundException("Ссылка не найдена.");
+            }
+
+            shortLink.OriginalUrl = newOriginalUrl;
+
+            var validationResult = await _validator.ValidateAsync(shortLink);
+            if (!validationResult.IsValid)
+            {
+                throw new InvalidUrlException(string.Join("; ", validationResult.Errors.Select(e => e.ErrorMessage)));
+            }
+
+            await _repository.UpdateAsync(shortLink);
+            return shortLink;
+        }
     }
 }

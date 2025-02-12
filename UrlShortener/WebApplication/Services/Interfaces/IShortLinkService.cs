@@ -9,5 +9,6 @@ namespace WebApplication.Services.Interfaces
         Task<IEnumerable<ShortLink>> GetAllShortLinksAsync();
         Task IncrementClickCountAsync(string shortUrl);
         Task DeleteShortLinkAsync(int id);
+        Task<ShortLink> UpdateShortLinkAsync(int id, string newOriginalUrl);
     }
 }

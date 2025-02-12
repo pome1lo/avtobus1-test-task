@@ -45,6 +45,14 @@ namespace WebApplication.Controllers
             return Redirect(shortLink.OriginalUrl);
         }
 
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateShortLink(int id, [FromBody] string newOriginalUrl)
+        {
+            return Ok(
+                await _shortLinkService.UpdateShortLinkAsync(id, newOriginalUrl)
+            );
+        }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteShortLink(int id)
         {
