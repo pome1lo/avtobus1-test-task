@@ -12,8 +12,8 @@ using WebApplication.Data;
 namespace WebApplication.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250211155158_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250213074954_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -59,25 +59,25 @@ namespace WebApplication.Migrations
                         {
                             Id = 1,
                             ClickCount = 0,
-                            CreatedAt = new DateTime(2025, 2, 11, 15, 51, 58, 228, DateTimeKind.Utc).AddTicks(6950),
+                            CreatedAt = new DateTime(2025, 2, 13, 7, 49, 53, 37, DateTimeKind.Utc).AddTicks(2091),
                             OriginalUrl = "https://blogs-images.forbes.com/ceciliarodriguez/files/2018/06/00000015_p.jpg",
-                            ShortUrl = "ad8f56e6"
+                            ShortUrl = "772f7fac"
                         },
                         new
                         {
                             Id = 2,
                             ClickCount = 0,
-                            CreatedAt = new DateTime(2025, 2, 11, 15, 51, 58, 228, DateTimeKind.Utc).AddTicks(6961),
+                            CreatedAt = new DateTime(2025, 2, 13, 7, 49, 53, 37, DateTimeKind.Utc).AddTicks(2093),
                             OriginalUrl = "https://s0.rbk.ru/v6_top_pics/media/img/5/13/756372136012135.jpg",
-                            ShortUrl = "2677ccea"
+                            ShortUrl = "60c0ed2f"
                         },
                         new
                         {
                             Id = 3,
                             ClickCount = 0,
-                            CreatedAt = new DateTime(2025, 2, 11, 15, 51, 58, 228, DateTimeKind.Utc).AddTicks(6979),
+                            CreatedAt = new DateTime(2025, 2, 13, 7, 49, 53, 37, DateTimeKind.Utc).AddTicks(2097),
                             OriginalUrl = "https://i.pinimg.com/736x/38/1e/0f/381e0f5a84c95c81f2d470d71ee9c2b4.jpg",
-                            ShortUrl = "c2c59d47"
+                            ShortUrl = "6a54607f"
                         });
                 });
 #pragma warning restore 612, 618
